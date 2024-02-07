@@ -1,21 +1,9 @@
 const mongoose = require('mongoose');
+const { database } = require('../config');
 
 //db connection
-mongoose.connect('mongodb://localhost:27017/notes', {
+mongoose.connect(database, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
-const Note = mongoose.model('Note', {
-    title: String,
-    body: String    
-})
-
-const newNote = new Note({
-    title: 'test title',
-    body: 'test note body',
-})
-
-newNote.save().then(() => {
-    console.log('note has been saved successfully');
-});
