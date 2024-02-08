@@ -6,7 +6,7 @@ const apiRouter = require('./routes/api');
 require('./db/mongoose');
 
 //routes
-app.use('/', apiRouter);
+app.use('/api/', apiRouter);
 
 //starting server listening on port 3000
 app.listen(port, function () {
