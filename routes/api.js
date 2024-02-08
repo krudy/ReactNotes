@@ -7,15 +7,15 @@ const noteActions = require('../actions/api/noteActions');
 router.get('/notes', noteActions.getAllNotes);         
 
 //pobieranie konkretnej notatki
-router.get('/notes/{id}', noteActions.getNote);
+router.get('/notes/:id', noteActions.getNote);
 
 // dodawanie
 router.post('/notes', noteActions.saveNote);
 
 // edycja
-router.put('/notes', noteActions.updateNote);
+router.put('/notes/:id', noteActions.updateNote);
 
 // usuwanie
-router.delete('/notes', noteActions.deleteNote);
+router.delete('/notes/:id', noteActions.deleteNote);
 
 module.exports = router;

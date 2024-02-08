@@ -4,16 +4,10 @@ class NoteActions {
 
     saveNote (req, res) {
 
-        const newNote = new Note({
-            title: 'test title 2',
-            body: 'test note body',
-        })
-        
-        newNote.save().then(() => {
-            console.log('note has been saved successfully');
-        });
+        const title = req.body.title;
+        const body = req.body.body;
 
-        res.send('homepage is working.');
+        res.send('note added successfully. title: ' + title + ' body: ' + body);
     }
 
     getAllNotes(req, res) {
@@ -23,17 +17,18 @@ class NoteActions {
     
     getNote(req, res) {
         // getting a single note
-        res.send('..');
+        res.send('note info');
     }
     
     updateNote(req, res) {
         // updating a single note
-        res.send('..');
+        res.send('note has been updated');
     }
     
     deleteNote(req, res) {
+        const id = req.params.id;
         // deleting a single note
-        res.send('..');
+        res.send(`note ${id} has been deleted `);
     }
 
 
