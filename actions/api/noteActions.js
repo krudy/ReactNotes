@@ -2,12 +2,26 @@ const Note = require("../../db/models/note");
 
 class NoteActions {
 
-    saveNote(req, res) {
+    async saveNote(req, res) {
 
         const title = req.body.title;
         const body = req.body.body;
 
-        res.send('note added successfully. title: ' + title + ' body: ' + body);
+        let newNote;
+        try{
+
+            newNote = new Note({
+               title: title,
+               body: body
+            });
+            await newNote.save();
+        }catch(err){
+            return res.status(422).json({message: err.message});
+        };
+        
+
+
+        res.status(200).json(newNote);
     }
 
     // getting all notes
@@ -21,7 +35,7 @@ class NoteActions {
             return res.status(500).json({ message: err.message });
         }
         console.log(notes);
-        res.status(200).json(notes);
+        res.status(201).json(notes);
     }
 
     // getting a single note
@@ -31,15 +45,22 @@ class NoteActions {
         res.status(200).json(note);
     }
 
-    updateNote(req, res) {
-        // updating a single note
-        res.send('note has been updated');
+    // updating a single note
+    async updateNote(req, res) {
+        const id = req.params.id;
+        const note = await Note.findOne({_id: id}); 
+        note.title = req.body.title;
+        note.body = req.body.body;
+        await note.save();
+
+        res.status(201).json(note);
     }
 
-    deleteNote(req, res) {
+    // deleting a single note
+    async deleteNote(req, res) {
         const id = req.params.id;
-        // deleting a single note
-        res.send(`note ${id} has been deleted `);
+        await Note.deleteOne({_id: id});
+        res.sendStatus(204);
     }
 
 
