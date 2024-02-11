@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css';
 import Notes from './components/Notes/Notes';
 
 function App(){
@@ -8,3 +9,5 @@ function App(){
   </div>
   );
 }
+
+export default App;
