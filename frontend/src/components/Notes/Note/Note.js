@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Note(props) {
+
+    const [showDescription, setShowDescription] = useState(false);
+
+    const toggleDescription = () => setShowDescription(!showDescription);
+
     return (
         <div className='note'>
-            <p>{props.title}</p>
-            <div className='description'>
+            <p onClick = {() => toggleDescription()}>{props.title}</p>         
+            {showDescription &&  <div className='description'>
                 <p>{props.body}</p>
-            </div>
+            </div>}
             <button>Edit</button>
             <button 
             className='delete'

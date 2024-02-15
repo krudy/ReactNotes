@@ -41,6 +41,7 @@ class Notes extends React.Component {
 
                 {this.state.notes.map(note => (
                     <Note
+                        key={note.id}
                         title={note.title}
                         body={note.body}
                         id={note.id}
