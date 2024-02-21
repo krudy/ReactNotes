@@ -2,6 +2,7 @@ import React, {useState} from "react";
 
 function NewNote(props) {
 
+    const [showForm, setShowForm] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
@@ -18,16 +19,18 @@ function NewNote(props) {
     const addNote = () => {
         const note = {
             title: title,
-            description: description
+            body: description
         };
 
         props.onAdd(note);
 
         setTitle('');
         setDescription('');
+        setShowForm(false);
     }
 
     return (
+        showForm ? (
         <div className = 'note'>
             <label>Title:</label>
             <input type = 'text' 
@@ -41,6 +44,9 @@ function NewNote(props) {
 
             <button onClick={() => addNote()} >Add Note</button>
         </div>
+        ) : ( 
+            <button onClick={() => {setShowForm(true)}}>New note</button>
+        )
     );
 }
 
