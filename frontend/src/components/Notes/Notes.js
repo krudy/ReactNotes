@@ -12,7 +12,7 @@ class Notes extends React.Component {
 
         this.state = {
 
-           notes: [
+            notes: [
                 {
                     id: '12345',
                     title: 'Wash the dog',
@@ -32,23 +32,23 @@ class Notes extends React.Component {
         console.log('deleting note ' + id);
         const notes = [...this.state.notes]
             .filter(note => note.id !== id);
-        this.setState ({notes: notes});
+        this.setState({ notes: notes });
 
     }
 
     addNote(note) {
         const notes = [...this.state.notes];
         notes.push(note);
-        this.setState ({notes: notes});
+        this.setState({ notes: notes });
     }
 
-    editNote (note) {
-       const notes = [...this.state.notes];
-       const index = notes.findIndex(x => x.id === note.id);
-       if(index >= 0) {
-        notes[index] = note;
-        this.setState({notes: notes});
-       } 
+    editNote(note) {
+        const notes = [...this.state.notes];
+        const index = notes.findIndex(x => x.id === note.id);
+        if (index >= 0) {
+            notes[index] = note;
+            this.setState({ notes: notes });
+        }
     }
 
     toogleModal() {
@@ -58,8 +58,8 @@ class Notes extends React.Component {
     editNoteHandler() {
         this.toogleModal();
     }
-    
-   
+
+
 
     render() {
 
@@ -68,15 +68,16 @@ class Notes extends React.Component {
             <div>
                 <p>My Notes:</p>
 
-                <NewNote 
-                onAdd = {(note) => this.addNote(note)}/>
+                <NewNote
+                    onAdd={(note) => this.addNote(note)} />
 
-                <Modal 
-                isOpen = {this.state.showEditModal}
-                contentLabel='Edit note'>
-                   <EditNote
-                   onEdit = {note => this.editNote(note)} /> 
-                    </Modal>
+                <Modal
+                    isOpen={this.state.showEditModal}
+                    contentLabel='Edit note'>
+                    <EditNote
+                        onEdit={note => this.editNote(note)} />
+                <button onClick={() => this.toogleModal()}>Cancel</button>
+                </Modal>
 
                 {this.state.notes.map(note => (
                     <Note
@@ -84,7 +85,7 @@ class Notes extends React.Component {
                         title={note.title}
                         body={note.body}
                         id={note.id}
-                        onEdit = {(note) => this.editNoteHandler(note) }
+                        onEdit={(note) => this.editNoteHandler(note)}
                         onDelete={(id) => this.deleteNote(note.id)} />
 
                 ))}
