@@ -2,6 +2,8 @@ import React from 'react';
 import './Notes.css';
 import Note from './Note/Note';
 import NewNote from './NewNote/NewNote';
+import Modal from 'react-modal';
+import EditNote from './EditNote/EditNote';
 
 class Notes extends React.Component {
 
@@ -21,7 +23,8 @@ class Notes extends React.Component {
                     title: 'do the shopping',
                     body: 'Buy milk, butter and oranges'
                 }
-            ]
+            ],
+            showEditModal: false,
         };
     }
 
@@ -39,6 +42,25 @@ class Notes extends React.Component {
         this.setState ({notes: notes});
     }
 
+    editNote (note) {
+       const notes = [...this.state.notes];
+       const index = notes.findIndex(x => x.id === note.id);
+       if(index >= 0) {
+        notes[index] = note;
+        this.setState({notes: notes});
+       } 
+    }
+
+    toogleModal() {
+        this.setState({ showEditModal: !this.state.showEditModal });
+    }
+
+    editNoteHandler() {
+        this.toogleModal();
+    }
+    
+   
+
     render() {
 
 
@@ -49,12 +71,20 @@ class Notes extends React.Component {
                 <NewNote 
                 onAdd = {(note) => this.addNote(note)}/>
 
+                <Modal 
+                isOpen = {this.state.showEditModal}
+                contentLabel='Edit note'>
+                   <EditNote
+                   onEdit = {note => this.editNote(note)} /> 
+                    </Modal>
+
                 {this.state.notes.map(note => (
                     <Note
                         key={note.id}
                         title={note.title}
                         body={note.body}
                         id={note.id}
+                        onEdit = {(note) => this.editNoteHandler(note) }
                         onDelete={(id) => this.deleteNote(note.id)} />
 
                 ))}
