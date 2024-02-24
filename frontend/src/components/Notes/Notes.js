@@ -4,6 +4,7 @@ import Note from './Note/Note';
 import NewNote from './NewNote/NewNote';
 import Modal from 'react-modal';
 import EditNote from './EditNote/EditNote';
+import axios from 'axios';
 
 class Notes extends React.Component {
 
@@ -12,27 +13,27 @@ class Notes extends React.Component {
 
         this.state = {
 
-            notes: [
-                {
-                    id: '12345',
-                    title: 'Wash the dog',
-                    body: 'Remember to wash the dog with the special shampoo'
-                },
-                {
-                    id: '123345',
-                    title: 'do the shopping',
-                    body: 'Buy milk, butter and oranges'
-                }
-            ],
+            notes: [],
             showEditModal: false,
             editNote: {}
         };
     }
 
+    componentDidMount( ) {
+        this.fetchNotes();
+    }
+
+    async fetchNotes() {
+       const res = await axios.get('http://localhost:3000/api/notes');
+       const notes = res.data;
+       
+       this.setState({ notes: notes });
+    }
+
     deleteNote(id) {
         console.log('deleting note ' + id);
         const notes = [...this.state.notes]
-            .filter(note => note.id !== id);
+            .filter(note => note._id !== id);
         this.setState({ notes: notes });
 
     }
@@ -45,7 +46,7 @@ class Notes extends React.Component {
 
     editNote(note) {
         const notes = [...this.state.notes];
-        const index = notes.findIndex(x => x.id === note.id);
+        const index = notes.findIndex(x => x._id === note._id);
         if (index >= 0) {
             notes[index] = note;
             this.setState({ notes: notes });
@@ -80,17 +81,17 @@ class Notes extends React.Component {
                     <EditNote
                         title = {this.state.editNote.title}
                         body = {this.state.editNote.body}
-                        id = {this.state.editNote.id}
+                        id = {this.state.editNote._id}
                         onEdit={note => this.editNote(note)} />
                 <button onClick={() => this.toogleModal()}>Cancel</button>
                 </Modal>
 
                 {this.state.notes.map(note => (
                     <Note
-                        key={note.id}
+                        key={note._id}
                         title={note.title}
                         body={note.body}
-                        id={note.id}
+                        id={note._id}
                         onEdit={(note) => this.editNoteHandler(note)}
                         onDelete={(id) => this.deleteNote(note.id)} />
 
