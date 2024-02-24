@@ -38,9 +38,13 @@ class Notes extends React.Component {
 
     }
 
-    addNote(note) {
+    async addNote(note) {
         const notes = [...this.state.notes];
-        notes.push(note);
+        //add to backend 
+        const res = await axios.post('http://localhost:3000/api/notes', note);
+        const newNote = res.data;
+        //add to frontend
+        notes.push(newNote);
         this.setState({ notes: notes });
     }
 
