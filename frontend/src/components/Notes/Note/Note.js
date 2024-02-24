@@ -10,7 +10,7 @@ function Note(props) {
         props.onEdit({
             title: props.title, 
             body: props.body, 
-            _id: props._id})
+            _id: props.id})
     }
 
     return (
