@@ -30,10 +30,11 @@ class Notes extends React.Component {
        this.setState({ notes: notes });
     }
 
-    deleteNote(id) {
-        console.log('deleting note ' + id);
+    async deleteNote(id) {
         const notes = [...this.state.notes]
             .filter(note => note._id !== id);
+        
+        await axios.delete('http://localhost:3000/api/notes/' + id);
         this.setState({ notes: notes });
 
     }
@@ -97,7 +98,7 @@ class Notes extends React.Component {
                         body={note.body}
                         id={note._id}
                         onEdit={(note) => this.editNoteHandler(note)}
-                        onDelete={(id) => this.deleteNote(note.id)} />
+                        onDelete={(id) => this.deleteNote(id)} />
 
                 ))}
 

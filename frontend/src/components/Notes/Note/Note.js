@@ -22,7 +22,7 @@ function Note(props) {
             <button onClick={editHandler}>Edit</button>
             <button 
             className='delete'
-            onClick = {() => props.onDelete(props._id)}
+            onClick = {() => props.onDelete(props.id)}
             >Delete</button>
         </div>
     );
